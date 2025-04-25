@@ -1,10 +1,11 @@
-import { DeleteOutlined } from "@ant-design/icons";
+import { DeleteOutlined, FileAddOutlined } from "@ant-design/icons";
 import { useStorage } from "../../Context/TaskContext";
 import TaskItem from "../TaskItem";
 import { Button, Checkbox, Empty } from "antd";
 import { useMemo, useState } from "react";
 import Filter from "../Filter";
 import { filterTasks } from "../../Utils/filter";
+import data from "../../Context/data.sample";
 
 export default function TaskList() {
   const [isSelectAll, setIsSelectAll] = useState(false);
@@ -53,6 +54,12 @@ export default function TaskList() {
     });
   };
 
+  const handleAddSampleData = () => {
+    setTasks(data);
+    setIsSelectAll(false);
+    setSelected([]);
+  };
+
   const filteredTasks = useMemo(
     () => filterTasks(tasks, filter?.label),
     [filter, tasks]
@@ -63,6 +70,13 @@ export default function TaskList() {
       <div className="flex flex-1 justify-between items-center gap-3">
         <Filter onChange={(val) => setFilter(val)} />
         <div className="flex items-center gap-3">
+          <Button
+            icon={<FileAddOutlined />}
+            type="dashed"
+            onClick={handleAddSampleData}
+          >
+            Add Sample Data
+          </Button>
           <Button
             onClick={handleDeleteMultiTask}
             iconPosition="end"
