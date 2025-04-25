@@ -1,13 +1,16 @@
 import { DeleteOutlined } from "@ant-design/icons";
 import { useStorage } from "../../Context/TaskContext";
 import TaskItem from "../TaskItem";
-import { Button, Checkbox } from "antd";
-import { useState } from "react";
+import { Button, Checkbox, Empty } from "antd";
+import { useMemo, useState } from "react";
+import Filter from "../Filter";
+import { filterTasks } from "../../Utils/filter";
 
 export default function TaskList() {
   const [isSelectAll, setIsSelectAll] = useState(false);
+  const [filter, setFilter] = useState(null);
 
-  const { tasks } = useStorage();
+  const { tasks, setTasks } = useStorage();
   const [selected, setSelected] = useState([]);
 
   const handleSelected = ({ id, checked }) => {
@@ -34,25 +37,58 @@ export default function TaskList() {
     }
   };
 
+  const handleDeleteMultiTask = () => {
+    setTasks((prev) => {
+      let newState = [...prev];
+      newState = newState.filter((item) => !selected.includes(item?.id));
+      return newState;
+    });
+    setIsSelectAll(false);
+  };
+
+  const handleDeleteSingleTask = (id) => {
+    setTasks((prev) => {
+      const newState = [...prev];
+      return newState.filter((task) => task?.id !== id);
+    });
+  };
+
+  const filteredTasks = useMemo(
+    () => filterTasks(tasks, filter?.label),
+    [filter, tasks]
+  );
+
   return (
-    <div className="flex flex-col gap-2">
-      <div className="flex flex-1 justify-end items-center gap-3">
-        <Button iconPosition="end" icon={<DeleteOutlined />}>
-          <span>Delete</span>
-        </Button>
-        <Checkbox checked={isSelectAll} onChange={handleSelectAll} />
+    <div className="flex flex-col gap-2 h-full">
+      <div className="flex flex-1 justify-between items-center gap-3">
+        <Filter onChange={(val) => setFilter(val)} />
+        <div className="flex items-center gap-3">
+          <Button
+            onClick={handleDeleteMultiTask}
+            iconPosition="end"
+            icon={<DeleteOutlined />}
+          >
+            <span>Delete</span>
+          </Button>
+          <Checkbox checked={isSelectAll} onChange={handleSelectAll} />
+        </div>
       </div>
-      {tasks?.map((task, index) => (
-        <TaskItem
-          id={task?.id}
-          priority={task?.priority}
-          taskName={task?.taskName}
-          isCompleted={task?.isCompleted}
-          key={index}
-          isSelected={selected.includes(task?.id)}
-          onSelected={handleSelected}
-        />
-      ))}
+
+      <div className="flex flex-col overflow-y-scroll hide-scrollbar gap-3">
+        {filteredTasks?.map((task, index) => (
+          <TaskItem
+            id={task?.id}
+            priority={task?.priority}
+            taskName={task?.taskName}
+            isCompleted={task?.isCompleted}
+            key={task?.id}
+            isSelected={selected.includes(task?.id)}
+            onSelected={handleSelected}
+            onDelete={handleDeleteSingleTask}
+          />
+        ))}
+      </div>
+      {filteredTasks?.length === 0 && <Empty description="Not found Task" />}
     </div>
   );
 }

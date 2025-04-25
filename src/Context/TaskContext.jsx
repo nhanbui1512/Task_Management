@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import data from "./data.sample";
 
 export const StorageContext = createContext();
 
@@ -24,6 +25,7 @@ function GlobalStates({ children }) {
   };
   useEffect(() => {
     loadTaskFromLocalStorage();
+    setTasks(data);
     // eslint-disable-next-line
   }, []);
 

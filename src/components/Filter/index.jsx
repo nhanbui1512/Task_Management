@@ -6,9 +6,10 @@ import {
 } from "@ant-design/icons";
 import { Dropdown } from "antd";
 
-function Filter() {
+function Filter({ onChange }) {
   const handleMenuClick = (e) => {
     setChoosed(items[e.key].label);
+    if (onChange) return onChange(items[e.key]);
   };
 
   const items = [

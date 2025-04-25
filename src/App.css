@@ -19,3 +19,12 @@
   --checkbox-border: #d1d5db;
   --checkbox-checked: #ea4c89;
 }
+
+.hide-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}

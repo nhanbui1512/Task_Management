@@ -1,5 +1,4 @@
 import { PlusOutlined } from "@ant-design/icons";
-import Filter from "../../components/Filter";
 import Sidebar from "../../components/Sidebar";
 import TaskList from "../../components/TaskList";
 import TaskManager from "../../components/TaskManager";
@@ -23,7 +22,7 @@ export default function Home() {
   return (
     <div className="flex bg-[var(--background-light)] min-h-[100vh]">
       <Sidebar />
-      <div className="py-10 px-20 w-full">
+      <div className="py-10 px-10 w-full">
         <div className="flex justify-between items-end">
           <div className="flex flex-col">
             <h3 className="text-3xl font-semibold text-[var(--text-main)]">
@@ -33,11 +32,9 @@ export default function Home() {
               Today, Wed 6 Jully, 2025{" "}
             </span>
           </div>
-
-          <Filter />
         </div>
 
-        <div className="h-[80%] mt-5">
+        <div className="mt-5">
           <TaskList />
         </div>
         <div className="flex justify-end mt-10">
