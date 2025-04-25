@@ -5,13 +5,21 @@ import TaskList from "../../components/TaskList";
 import TaskManager from "../../components/TaskManager";
 import { Button, Popover } from "antd";
 import { useState } from "react";
+import { useStorage } from "../../Context/TaskContext";
 
 export default function Home() {
+  const { setTasks } = useStorage();
+
   const [open, setOpen] = useState(false);
 
   const handleOpenChange = (newOpen) => {
     setOpen(newOpen);
   };
+
+  const handleCreateTask = (values) => {
+    setTasks((prev) => [...prev, values]);
+  };
+
   return (
     <div className="flex bg-[var(--background-light)] min-h-[100vh]">
       <Sidebar />
@@ -34,7 +42,7 @@ export default function Home() {
         </div>
         <div className="flex justify-end mt-10">
           <Popover
-            content={<TaskManager />}
+            content={<TaskManager onSubmit={handleCreateTask} />}
             trigger="click"
             open={open}
             onOpenChange={handleOpenChange}
