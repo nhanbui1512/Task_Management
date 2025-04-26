@@ -64,9 +64,9 @@ export default function Sidebar() {
         {sidebarContent}
       </div>
 
-      <div className="md:hidden px-4 py-2 bg-white shadow-sm flex items-center justify-betwee rounded-md">
-        <h3 className="text-xl font-semibold">Private</h3>
+      <div className="md:hidden px-4 py-2 bg-white shadow-sm flex items-center justify-betwee rounded-md gap-3">
         <Button icon={<MenuOutlined />} onClick={() => setOpen(true)} />
+        <h3 className="text-xl font-semibold">Private</h3>
       </div>
 
       <Drawer

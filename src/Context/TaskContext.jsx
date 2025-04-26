@@ -19,7 +19,7 @@ function GlobalStates({ children }) {
     const taskJSON = localStorage.getItem("task");
     if (taskJSON) {
       const taskData = JSON.parse(taskJSON);
-      setTasks(taskData);
+      if (Array.isArray(taskData)) setTasks(taskData);
     }
   };
   useEffect(() => {

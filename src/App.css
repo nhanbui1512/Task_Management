@@ -28,3 +28,17 @@
 .hide-scrollbar::-webkit-scrollbar {
   display: none; /* Chrome, Safari and Opera */
 }
+
+/* Mobile */
+@media (max-width: 740px) {
+  .col-break-point {
+    display: flex;
+    flex-direction: column;
+  }
+  .hidden-break-point {
+    display: none;
+  }
+  .appear-break-point {
+    display: block;
+  }
+}

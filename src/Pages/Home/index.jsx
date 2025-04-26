@@ -20,9 +20,9 @@ export default function Home() {
   };
 
   return (
-    <div className="flex bg-[var(--background-light)] min-h-[100vh]">
+    <div className="flex bg-[var(--background-light)] min-h-[100vh] flex-col">
       <Sidebar />
-      <div className="py-10 px-10 w-full">
+      <div className="py-10 px-10 w-full max-740:px-6">
         <div className="flex justify-between items-end">
           <div className="flex flex-col">
             <h3 className="text-3xl font-semibold text-[var(--text-main)]">

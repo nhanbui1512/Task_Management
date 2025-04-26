@@ -12,6 +12,9 @@ module.exports = {
         "2xl": "1.5rem",
       },
     },
+    screens: {
+      "max-740": { max: "740px" }, // breakpoint cho mobile
+    },
   },
   plugins: [],
 };

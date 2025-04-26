@@ -1,4 +1,9 @@
-import { DeleteOutlined, FileAddOutlined } from "@ant-design/icons";
+import {
+  DeleteOutlined,
+  FileAddOutlined,
+  SortAscendingOutlined,
+  SortDescendingOutlined,
+} from "@ant-design/icons";
 import { useStorage } from "../../Context/TaskContext";
 import TaskItem from "../TaskItem";
 import { Button, Checkbox, Empty } from "antd";
@@ -6,10 +11,12 @@ import { useMemo, useState } from "react";
 import Filter from "../Filter";
 import { filterTasks } from "../../Utils/filter";
 import data from "../../Context/data.sample";
+import { prioritySortTasks } from "../../Utils/array";
 
 export default function TaskList() {
   const [isSelectAll, setIsSelectAll] = useState(false);
   const [filter, setFilter] = useState(null);
+  const [prioritySort, setPrioritySort] = useState(null);
 
   const { tasks, setTasks } = useStorage();
   const [selected, setSelected] = useState([]);
@@ -60,15 +67,33 @@ export default function TaskList() {
     setSelected([]);
   };
 
-  const filteredTasks = useMemo(
+  let filteredTasks = useMemo(
     () => filterTasks(tasks, filter?.label),
     [filter, tasks]
   );
 
+  if (prioritySort !== null) {
+    filteredTasks = prioritySortTasks(filteredTasks, !prioritySort);
+  }
+
   return (
     <div className="flex flex-col gap-2 h-full">
-      <div className="flex flex-1 justify-between items-center gap-3">
-        <Filter onChange={(val) => setFilter(val)} />
+      <div className="flex flex-1 justify-between items-center gap-3 max-740:flex-col max-740:items-end">
+        <div className="flex items-center gap-3">
+          <Filter onChange={(val) => setFilter(val)} />
+          <Button
+            onClick={() => setPrioritySort(!prioritySort)}
+            icon={
+              prioritySort ? (
+                <SortAscendingOutlined />
+              ) : (
+                <SortDescendingOutlined />
+              )
+            }
+          >
+            Priority
+          </Button>
+        </div>
         <div className="flex items-center gap-3">
           <Button
             icon={<FileAddOutlined />}
@@ -99,6 +124,9 @@ export default function TaskList() {
             isSelected={selected.includes(task?.id)}
             onSelected={handleSelected}
             onDelete={handleDeleteSingleTask}
+            data={task}
+            startTime={task?.startTime}
+            endTime={task?.endTime}
           />
         ))}
       </div>
