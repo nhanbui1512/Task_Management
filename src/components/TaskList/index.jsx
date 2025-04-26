@@ -79,7 +79,7 @@ export default function TaskList() {
   return (
     <div className="flex flex-col gap-2 h-full">
       <div className="flex flex-1 justify-between items-center gap-3 max-740:flex-col max-740:items-end">
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 max-740:mr-[28px]">
           <Filter onChange={(val) => setFilter(val)} />
           <Button
             onClick={() => setPrioritySort(!prioritySort)}
@@ -114,7 +114,7 @@ export default function TaskList() {
       </div>
 
       <div className="flex flex-col overflow-y-scroll hide-scrollbar gap-3">
-        {filteredTasks?.map((task, index) => (
+        {filteredTasks?.map((task) => (
           <TaskItem
             id={task?.id}
             priority={task?.priority}

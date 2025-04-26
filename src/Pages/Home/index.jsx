@@ -19,6 +19,14 @@ export default function Home() {
     setTasks((prev) => [...prev, values]);
   };
 
+  const dateTime = new Date();
+  const formattedDay = dateTime.toLocaleDateString("en-GB", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+
   return (
     <div className="flex bg-[var(--background-light)] min-h-[100vh] flex-col">
       <Sidebar />
@@ -26,10 +34,10 @@ export default function Home() {
         <div className="flex justify-between items-end">
           <div className="flex flex-col">
             <h3 className="text-3xl font-semibold text-[var(--text-main)]">
-              Good Morning, Sullivan!✌
+              Good Morning, Developer!✌
             </h3>
             <span className="text-base text-[var(--text-sub)]">
-              Today, Wed 6 Jully, 2025{" "}
+              Today, {formattedDay}
             </span>
           </div>
         </div>

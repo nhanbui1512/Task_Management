@@ -38,6 +38,7 @@ function Filter({ onChange }) {
 
   return (
     <Dropdown.Button
+      data-testid="filter-button"
       style={{
         width: "fit-content",
       }}
